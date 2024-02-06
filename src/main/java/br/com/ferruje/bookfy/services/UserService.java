@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.ferruje.bookfy.entities.User;
 import br.com.ferruje.bookfy.entities.dtos.UserDTO;
 import br.com.ferruje.bookfy.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -20,6 +21,14 @@ public class UserService {
     return repository.findAll();
   }
 
+  public User findById(Long id) throws Exception {
+    Optional<User> userOp = repository.findById(id);
+    if (userOp.isPresent())
+      return userOp.get(); 
+    throw new Exception("Usuário não encontrado");
+  }
+
+  @Transactional
   public User create(UserDTO entity) throws Exception{
     Optional<User> userOp = repository.findByName(entity.name());
     if (userOp.isPresent()) {
