@@ -1,6 +1,7 @@
 package br.com.ferruje.bookfy.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,17 @@ public class PageService {
   @Autowired
   private BookService bookService;
 
-  public List<Page> findAll() {
-    return repository.findAll();
+  public List<Page> findAllByBook(Long book_id) throws Exception{
+    Optional<List<Page>> pagesOp = repository.findByBook(bookService.findById(book_id));
+    if (pagesOp.isPresent()) {
+      return pagesOp.get();
+    }
+    throw new Exception("O livro não contem página");
   }
 
   @Transactional
   public Page create(PageDTO entity) throws Exception {
-    Book book = bookService.findById(entity.bookId());
+    Book book = bookService.findById(entity.book_id());
     Page page = new Page();
     page.setNumber(entity.number());
     page.setContent(entity.content());

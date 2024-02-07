@@ -3,8 +3,6 @@ package br.com.ferruje.bookfy.entities;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.context.annotation.Lazy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.annotation.Nonnull;
