@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ferruje.bookfy.entities.Book;
-import br.com.ferruje.bookfy.entities.User;
 import br.com.ferruje.bookfy.entities.dtos.BookDTO;
+import br.com.ferruje.bookfy.entities.user.User;
 import br.com.ferruje.bookfy.repositories.BookRepository;
 import jakarta.transaction.Transactional;
 

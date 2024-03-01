@@ -1,5 +1,7 @@
 package br.com.ferruje.bookfy.entities.dtos;
 
-public record UserDTO(String name, String email, String password) {
+import br.com.ferruje.bookfy.entities.user.UserRole;
+
+public record UserDTO(String name, String email, String password, UserRole role) {
   
 }

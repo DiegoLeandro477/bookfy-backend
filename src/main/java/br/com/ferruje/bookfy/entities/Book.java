@@ -3,6 +3,7 @@ package br.com.ferruje.bookfy.entities;
 import java.util.Date;
 import java.util.List;
 
+import br.com.ferruje.bookfy.entities.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

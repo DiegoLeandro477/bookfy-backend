@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.ferruje.bookfy.entities.User;
 import br.com.ferruje.bookfy.entities.dtos.UserDTO;
+import br.com.ferruje.bookfy.entities.user.User;
 import br.com.ferruje.bookfy.services.UserService;
 
 @Controller
