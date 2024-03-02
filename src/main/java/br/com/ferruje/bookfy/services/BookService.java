@@ -35,6 +35,7 @@ public class BookService {
   }
 
   public Book findById(Long id) throws Exception {
+    @SuppressWarnings("null")
     Optional<Book> bookOp = repository.findById(id);
     if (bookOp.isPresent()){
       return bookOp.get();
