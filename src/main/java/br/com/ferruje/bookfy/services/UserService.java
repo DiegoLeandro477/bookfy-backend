@@ -4,24 +4,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.ferruje.bookfy.entities.dtos.UserDTO;
 import br.com.ferruje.bookfy.entities.user.User;
 import br.com.ferruje.bookfy.repositories.UserRepository;
-import br.com.ferruje.bookfy.services.authorization.AuthorizationUserService;
 import jakarta.transaction.Transactional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
   
   @Autowired
   private UserRepository repository;
-  @Autowired
-  AuthorizationUserService authorizationUserService;
 
   public List<User> findAll() {
     return repository.findAll();
@@ -37,10 +35,10 @@ public class UserService {
 
   @Transactional
   public User create(UserDTO entity) throws Exception{
-    if (authorizationUserService.loadUserByUsername(entity.email()) != null) return ResponseEntity.badRequest().build();
-    
-    String encryptedPassword = new BCryptPasswordEncoder().encode(entity.password());
+    if (repository.findByEmail(entity.email()) != null) ;
 
+    String encryptedPassword = new BCryptPasswordEncoder().encode(entity.password());
+    
     Optional<User> userOp = repository.findByName(entity.name());
     if (userOp.isPresent()) {
       throw new Exception("nome de usuário já existente");
@@ -52,5 +50,10 @@ public class UserService {
     user.setPassword(encryptedPassword);
     user.setRole(entity.role());
     return repository.save(user);
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+    return repository.findByEmail(userEmail);
   }
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("api/pages")
+@RequestMapping("/api/pages")
 public class PageResouce {  
 
   @Autowired

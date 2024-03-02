@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
-@RequestMapping("api/books")
+@RequestMapping("/api/books")
 public class BookResource {
   
   @Autowired
