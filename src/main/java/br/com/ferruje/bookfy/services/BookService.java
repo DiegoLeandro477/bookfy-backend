@@ -28,18 +28,7 @@ public class BookService {
     List<Book> list = repository.findAll();
     List<BookResponseDTO> list_books = new ArrayList<>();
     for (Book book : list) {
-      BookResponseDTO response = new BookResponseDTO(
-                                      book.getId(),
-                                      book.getSinopse(),
-                                      book.getVol(),
-                                      book.getUser().getId(),
-                                      book.getParticipations().stream().map(user -> user.getId()).collect(Collectors.toList()),
-                                      book.getGeneros(),
-                                      book.getPages().size(),
-                                      book.getDate_create(),
-                                      book.getDate_update(),
-                                      book.getDate_publication()
-      );
+      BookResponseDTO response = transformerResponse(book);
       list_books.add(response);
     }
     return list_books;
@@ -56,17 +45,32 @@ public class BookService {
 
   @Transactional
   public Book create(BookDTO entity) throws Exception {
-    User user = userService.findById(entity.user_id());
+    User user = userService.findById(entity.author_id());
     Optional<Book> bookOp = repository.findByNameAndUser(entity.name(), user);
     if (bookOp.isPresent()){
       throw new Exception("vc já utilizou esse nome");
     }
     Book book = new Book();
     book.setName(entity.name());
-    book.setSinopse(entity.sinopse());
-    book.setVol(entity.vol());
-    book.setUser(user);
-    book.setGeneros(entity.generos());
+    book.setSynopsis(entity.synopsis());
+    book.setVolume(entity.volume());
+    book.setAuthor(user);
+    book.setGenres(entity.genres());
     return repository.save(book);
+  }
+
+  public BookResponseDTO transformerResponse(Book book){
+    return new BookResponseDTO(
+      book.getId(),
+      book.getSynopsis(),
+      book.getVolume(),
+      book.getAuthor().getId(),
+      book.getParticipations().stream().map(user -> user.getId()).collect(Collectors.toList()),
+      book.getGenres(),
+      book.getPages().size(),
+      book.getCreation_date(),
+      book.getUpdate_date(),
+      book.getPublication_date()    
+    );
   }
 }

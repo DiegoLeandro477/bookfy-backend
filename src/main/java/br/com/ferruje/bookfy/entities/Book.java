@@ -23,25 +23,25 @@ public class Book {
   @Id   @GeneratedValue( strategy=GenerationType.IDENTITY )
   private Long id;
 
-  private String name, sinopse;
-  private Integer vol;
+  private String name, synopsis;
+  private Integer volume;
   
   @ManyToOne
-  private User user;
+  private User author;
 
   private List<User> participations;
-  private Date date_create, date_publication, date_update;
+  private Date creation_date, publication_date, update_date;
   
   @OneToMany( mappedBy="book" )
   private List<Page> pages;
 
-  private List<String> Generos;
+  private List<String> genres;
 
   private byte[] image;
 
   @PrePersist
   protected void onCreate() {
-    this.date_create = new Date(System.currentTimeMillis());
-    this.date_update = date_create;
+    this.creation_date = new Date(System.currentTimeMillis());
+    this.update_date = creation_date;
   }
 }
