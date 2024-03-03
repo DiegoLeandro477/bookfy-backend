@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ferruje.bookfy.entities.Book;
-import br.com.ferruje.bookfy.entities.dtos.BookDTO;
+import br.com.ferruje.bookfy.entities.dtos.booksDTO.BookDTO;
+import br.com.ferruje.bookfy.entities.dtos.booksDTO.BookResponseDTO;
 import br.com.ferruje.bookfy.services.BookService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +27,13 @@ public class BookResource {
   private BookService service;
 
   @PostMapping
-  public ResponseEntity<Book> createBook(@RequestBody BookDTO entity) throws Exception { 
-    return ResponseEntity.ok(service.create(entity));
+  public ResponseEntity<Boolean> createBook(@RequestBody @Valid BookDTO entity) throws Exception { 
+    service.create(entity);
+    return ResponseEntity.ok(true);
   }
 
   @GetMapping
-  public ResponseEntity<List<Book>> findAll() {
+  public ResponseEntity<List<BookResponseDTO>> findAll() {
       return ResponseEntity.ok(service.findAll());
   }
   

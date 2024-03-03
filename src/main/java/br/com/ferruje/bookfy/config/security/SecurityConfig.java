@@ -30,9 +30,9 @@ public class SecurityConfig {
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       // Faremos as configurações dos endpoints agora
       .authorizeHttpRequests(authorization -> authorization
-        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-        .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-        .requestMatchers(HttpMethod.POST, "/api/books").hasRole("USER")
+        .requestMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+        //.requestMatchers(HttpMethod.POST, "/api/books").hasRole("USER")
         .anyRequest().authenticated())
       .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
       .build();

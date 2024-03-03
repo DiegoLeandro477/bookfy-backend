@@ -1,5 +1,6 @@
 package br.com.ferruje.bookfy.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ferruje.bookfy.entities.Book;
-import br.com.ferruje.bookfy.entities.dtos.BookDTO;
+import br.com.ferruje.bookfy.entities.dtos.booksDTO.BookDTO;
+import br.com.ferruje.bookfy.entities.dtos.booksDTO.BookResponseDTO;
 import br.com.ferruje.bookfy.entities.user.User;
 import br.com.ferruje.bookfy.repositories.BookRepository;
 import jakarta.transaction.Transactional;
@@ -22,16 +24,25 @@ public class BookService {
   @Autowired
   private UserService userService;
 
-  public List<Book> findAll(){
+  public List<BookResponseDTO> findAll(){
     List<Book> list = repository.findAll();
-
-    return list.stream()
-      .map(book -> {
-        book.getUser().setId(null);
-        book.getUser().setPassword(null);
-        return book;
-      })
-      .collect(Collectors.toList());
+    List<BookResponseDTO> list_books = new ArrayList<>();
+    for (Book book : list) {
+      BookResponseDTO response = new BookResponseDTO(
+                                      book.getId(),
+                                      book.getSinopse(),
+                                      book.getVol(),
+                                      book.getUser().getId(),
+                                      book.getParticipations().stream().map(user -> user.getId()).collect(Collectors.toList()),
+                                      book.getGeneros(),
+                                      book.getPages().size(),
+                                      book.getDate_create(),
+                                      book.getDate_update(),
+                                      book.getDate_publication()
+      );
+      list_books.add(response);
+    }
+    return list_books;
   }
 
   public Book findById(Long id) throws Exception {

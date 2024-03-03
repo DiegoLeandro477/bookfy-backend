@@ -1,4 +1,4 @@
-package br.com.ferruje.bookfy.entities.dtos;
+package br.com.ferruje.bookfy.entities.dtos.booksDTO;
 
 import java.util.List;
 

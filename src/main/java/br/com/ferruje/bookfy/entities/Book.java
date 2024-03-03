@@ -28,12 +28,16 @@ public class Book {
   
   @ManyToOne
   private User user;
+
+  private List<User> participations;
   private Date date_create, date_publication, date_update;
   
   @OneToMany( mappedBy="book" )
   private List<Page> pages;
 
   private List<String> Generos;
+
+  private byte[] image;
 
   @PrePersist
   protected void onCreate() {

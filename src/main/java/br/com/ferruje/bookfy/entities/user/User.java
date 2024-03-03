@@ -38,11 +38,11 @@ public class User implements UserDetails {
   @JsonIgnore
   private List<Book> books;
   
-  @Nonnull private Date date_create;
-  @Nonnull private Date date_update;
+  @Nonnull private Date creation_date;
+  @Nonnull private Date update_date;
   @PrePersist protected void onCreate() {
-    this.date_create = new Date(System.currentTimeMillis());
-    this.date_update = date_create;
+    this.creation_date = new Date(System.currentTimeMillis());
+    this.update_date = creation_date;
   }
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
