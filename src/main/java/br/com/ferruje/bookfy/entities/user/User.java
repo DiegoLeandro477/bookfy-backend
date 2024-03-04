@@ -34,7 +34,7 @@ public class User implements UserDetails {
   private String name, email, password;
   private UserRole role;
 
-  @OneToMany( mappedBy = "user" )
+  @OneToMany( mappedBy = "author" )
   @JsonIgnore
   private List<Book> books;
   

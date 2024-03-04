@@ -40,15 +40,15 @@ public class BookService {
     if (bookOp.isPresent()){
       return bookOp.get();
     }
-    throw new Exception("Livro inexistente");
+    throw new Exception("Não foi possível encontrar livro");
   }
 
   @Transactional
   public Book create(BookDTO entity) throws Exception {
     User user = userService.findById(entity.author_id());
-    Optional<Book> bookOp = repository.findByNameAndUser(entity.name(), user);
+    Optional<Book> bookOp = repository.findByNameAndAuthor(entity.name(), user);
     if (bookOp.isPresent()){
-      throw new Exception("vc já utilizou esse nome");
+      throw new Exception("Nome já usado");
     }
     Book book = new Book();
     book.setName(entity.name());
@@ -65,7 +65,6 @@ public class BookService {
       book.getSynopsis(),
       book.getVolume(),
       book.getAuthor().getId(),
-      book.getParticipations().stream().map(user -> user.getId()).collect(Collectors.toList()),
       book.getGenres(),
       book.getPages().size(),
       book.getCreation_date(),

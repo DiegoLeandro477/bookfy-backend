@@ -29,27 +29,25 @@ public class TokenService {
         .withExpiresAt(genExpirationDate())
         .sign(algorithm);
         return token;
-    } catch (JWTCreationException e) {
-      throw new RuntimeException("Error while generation Token", e);
+    } catch (JWTCreationException exception) {
+        throw new RuntimeException("Error while generating token", exception);
     }
-  }
+}
 
-  public String validateToken(String token) {
+public String validateToken(String token){
     try {
-      Algorithm algorithm = Algorithm.HMAC256(secret);
-      return JWT.require(algorithm)
-        .withIssuer("auth-api")
-        .build()
-        .verify(token)
-        .getSubject();
-        
-    } catch (JWTVerificationException e) {
-      return "";
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        return JWT.require(algorithm)
+                .withIssuer("auth-api")
+                .build()
+                .verify(token)
+                .getSubject();
+    } catch (JWTVerificationException exception){
+        return "";
     }
-  }
+}
 
-  public Instant genExpirationDate() {
-    return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("+03:00"));
-  }
-
+private Instant genExpirationDate(){
+    return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+}
 }

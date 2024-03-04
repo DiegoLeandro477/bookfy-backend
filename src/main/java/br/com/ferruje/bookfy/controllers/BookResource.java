@@ -22,17 +22,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class BookResource {
   
   @Autowired
-  private BookService service;
+  private BookService bookService;
 
   @PostMapping
-  public ResponseEntity<BookResponseDTO> createBook(@RequestBody @Valid BookDTO entity) throws Exception { 
-    service.create(entity);
-    return ResponseEntity.ok(service.transformerResponse(service.create(entity)));
+  public ResponseEntity<BookResponseDTO> createBook(@RequestBody @Valid BookDTO entity) throws Exception {
+    return ResponseEntity.ok(bookService.transformerResponse(bookService.create(entity)));
   }
 
   @GetMapping
   public ResponseEntity<List<BookResponseDTO>> findAll() {
-      return ResponseEntity.ok(service.findAll());
+      return ResponseEntity.ok(bookService.findAll());
   }
   
 }

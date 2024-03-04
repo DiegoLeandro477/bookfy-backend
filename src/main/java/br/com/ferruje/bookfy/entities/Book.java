@@ -28,8 +28,6 @@ public class Book {
   
   @ManyToOne
   private User author;
-
-  private List<User> participations;
   private Date creation_date, publication_date, update_date;
   
   @OneToMany( mappedBy="book" )

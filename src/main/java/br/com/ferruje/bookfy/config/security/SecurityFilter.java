@@ -30,7 +30,10 @@ public class SecurityFilter extends OncePerRequestFilter{
         var token = this.recoverToken(request);
         if (token != null) {
           var login = tokenService.validateToken(token);
+          System.out.println("\n\n Email: " + login + "\n");
           UserDetails user = userService.loadUserByUsername(login);
+
+          System.out.println("\n\n USER: " + user.getAuthorities());
 
           var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
           SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -40,6 +43,7 @@ public class SecurityFilter extends OncePerRequestFilter{
 
   private String recoverToken(HttpServletRequest request) {
     var authHeader = request.getHeader("Authorization");
+
 
     if (authHeader == null)
       return null;

@@ -9,7 +9,6 @@ public record BookResponseDTO(
   String synopsis,
   Integer volume,
   Long author_id,
-  List<Long> participations,
   List<String> genres,
   Integer pages,
   Date creation_date,
