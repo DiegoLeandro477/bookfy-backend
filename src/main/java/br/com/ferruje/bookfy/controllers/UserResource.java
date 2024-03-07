@@ -41,6 +41,11 @@ public class UserResource {
     auth.setPassword(null);
     return ResponseEntity.ok(new LoginResponseDTO(token, auth));
   }
+
+  @GetMapping("/verify")
+  public ResponseEntity<Boolean> verify(){
+    return ResponseEntity.ok(true);
+  }
   
   @PostMapping("/register")
   public ResponseEntity<Boolean> register(@RequestBody @Valid UserDTO data) throws Exception{
