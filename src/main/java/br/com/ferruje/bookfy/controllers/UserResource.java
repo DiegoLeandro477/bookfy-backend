@@ -19,11 +19,14 @@ import br.com.ferruje.bookfy.entities.dtos.UserDTO;
 import br.com.ferruje.bookfy.entities.user.User;
 import br.com.ferruje.bookfy.services.UserService;
 import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserResource {
   
   @Autowired    private UserService userService;
@@ -35,7 +38,8 @@ public class UserResource {
     var usernamePassword = new UsernamePasswordAuthenticationToken(entity.email(), entity.password());
     var auth = (User) authenticationManager.authenticate(usernamePassword).getPrincipal();
     var token = tokenService.generatedToken(auth);
-    return ResponseEntity.ok(new LoginResponseDTO(token));
+    auth.setPassword(null);
+    return ResponseEntity.ok(new LoginResponseDTO(token, auth));
   }
   
   @PostMapping("/register")
@@ -45,7 +49,7 @@ public class UserResource {
         return ResponseEntity.ok(true);
   }
 
-  @GetMapping("/all")
+  @GetMapping
   public ResponseEntity<List<User>> findAll() {
       return ResponseEntity.ok(userService.findAll());
   }

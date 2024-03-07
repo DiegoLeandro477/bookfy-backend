@@ -1,5 +1,7 @@
 package br.com.ferruje.bookfy.entities.dtos;
 
-public record LoginResponseDTO(String token) {
+import br.com.ferruje.bookfy.entities.user.User;
+
+public record LoginResponseDTO(String token, User user) {
   
 }
